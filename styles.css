@@ -191,7 +191,7 @@
       text-align: center;
     }
 
-    .hero h1 {
+    .hero h2 {
       margin: 0 0 18px;
       font-size: clamp(3rem, 6vw, 4.9rem);
       font-family: "Mulish", Arial, Helvetica, sans-serif;
