@@ -1,4 +1,4 @@
-# Mayank Gupta Dev Portfolio
+﻿# Mayank Gupta Dev Portfolio
 
 Personal developer portfolio website for Mayank Gupta. This project showcases a modern single-page portfolio experience with a responsive layout, animated hero section, portfolio filtering, contact section, and SEO-friendly metadata.
 
@@ -92,10 +92,11 @@ This project can be deployed on any static hosting platform, such as:
 
 Mayank Gupta
 
-- LinkedIn: https://www.linkedin.com/in/mayank-gupta-offical/
+- LinkedIn: https://www.linkedin.com/in/mayank-gupta-official/
 - X: https://x.com/mayank_omer
 - Instagram: https://www.instagram.com/mayankomar_official/
 
 ## License
 
 This project is available under the terms of the [LICENSE](LICENSE).
+
