@@ -7,7 +7,82 @@ const profilePhoto = document.querySelector(".profile-pic img[data-local-src]");
 const gallery = document.querySelector(".gallery");
 const portfolioTabs = document.querySelectorAll(".portfolio-filter a");
 const galleryCards = document.querySelectorAll(".gallery-card");
+const jobSummaries = document.querySelectorAll(".timeline-card .readmore");
+const aboutDescriptions = document.querySelectorAll(".about-description.readmore");
+const revealSections = document.querySelectorAll("main section");
+const skillBars = document.querySelectorAll(".skills .bar div");
 let portfolioSwitchTimer = null;
+
+if (revealSections.length) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  revealSections.forEach((section) => {
+    section.classList.add("reveal-on-scroll");
+  });
+
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealSections.forEach((section) => {
+      section.classList.add("is-visible");
+    });
+  } else {
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      });
+    }, {
+      threshold: 0.16,
+      rootMargin: "0px 0px -80px 0px"
+    });
+
+    revealSections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+  }
+}
+
+if (skillBars.length) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  skillBars.forEach((bar) => {
+    bar.dataset.targetWidth = bar.style.width || "0%";
+    bar.style.width = prefersReducedMotion ? bar.dataset.targetWidth : "0%";
+  });
+
+  const animateSkillBars = () => {
+    skillBars.forEach((bar, index) => {
+      window.setTimeout(() => {
+        bar.style.width = bar.dataset.targetWidth;
+      }, index * 120);
+    });
+  };
+
+  const resetSkillBars = () => {
+    skillBars.forEach((bar) => {
+      bar.style.width = "0%";
+    });
+  };
+
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    animateSkillBars();
+  } else {
+    const skills = document.querySelector(".skills");
+    const skillsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateSkillBars();
+        } else {
+          resetSkillBars();
+        }
+      });
+    }, {
+      threshold: 0.35
+    });
+
+    if (skills) {
+      skillsObserver.observe(skills);
+    }
+  }
+}
 
 if (hero) {
   const heroBanner = new Image();
@@ -148,6 +223,132 @@ if (portfolioTabs.length && galleryCards.length) {
           animateVisibleCards();
         });
       }, 140);
+    });
+  });
+}
+
+if (jobSummaries.length) {
+  const setCollapsedHeight = (summary) => {
+    const lineHeight = parseFloat(window.getComputedStyle(summary).lineHeight);
+    const collapsedHeight = lineHeight * 2;
+
+    summary.style.setProperty("--readmore-collapsed-height", `${collapsedHeight}px`);
+    summary.style.maxHeight = `${collapsedHeight}px`;
+  };
+
+  jobSummaries.forEach((summary, index) => {
+    const button = document.createElement("button");
+    const summaryId = summary.id || `job-summary-${index + 1}`;
+
+    summary.id = summaryId;
+    setCollapsedHeight(summary);
+    summary.classList.add("is-collapsed");
+
+    button.type = "button";
+    button.className = "readmore-toggle";
+    button.textContent = "Read More";
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", summaryId);
+
+    button.addEventListener("click", () => {
+      const isExpanded = button.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        summary.style.maxHeight = `${summary.scrollHeight}px`;
+
+        requestAnimationFrame(() => {
+          setCollapsedHeight(summary);
+          summary.classList.add("is-collapsed");
+        });
+      } else {
+        summary.classList.remove("is-collapsed");
+        summary.style.maxHeight = `${summary.scrollHeight}px`;
+        summary.closest(".timeline-card").scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+      }
+
+      button.textContent = isExpanded ? "Read More" : "Read Less";
+      button.setAttribute("aria-expanded", isExpanded ? "false" : "true");
+    });
+
+    summary.insertAdjacentElement("afterend", button);
+  });
+
+  window.addEventListener("resize", () => {
+    jobSummaries.forEach((summary) => {
+      const isCollapsed = summary.classList.contains("is-collapsed");
+
+      if (isCollapsed) {
+        setCollapsedHeight(summary);
+      } else {
+        summary.style.maxHeight = `${summary.scrollHeight}px`;
+      }
+    });
+  });
+}
+
+if (aboutDescriptions.length) {
+  const setAboutCollapsedHeight = (description) => {
+    const firstParagraph = description.querySelector("p");
+    const lineHeight = parseFloat(window.getComputedStyle(firstParagraph || description).lineHeight);
+    const collapsedLines = Number(description.dataset.collapsedLines) || 3;
+    const collapsedHeight = lineHeight * collapsedLines;
+
+    description.style.setProperty("--readmore-collapsed-height", `${collapsedHeight}px`);
+    description.style.maxHeight = `${collapsedHeight}px`;
+  };
+
+  aboutDescriptions.forEach((description, index) => {
+    const button = document.createElement("button");
+    const descriptionId = description.id || `about-description-${index + 1}`;
+
+    description.id = descriptionId;
+    setAboutCollapsedHeight(description);
+    description.classList.add("is-collapsed");
+
+    button.type = "button";
+    button.className = "readmore-toggle";
+    button.textContent = "Read More";
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("aria-controls", descriptionId);
+
+    button.addEventListener("click", () => {
+      const isExpanded = button.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        description.style.maxHeight = `${description.scrollHeight}px`;
+
+        requestAnimationFrame(() => {
+          setAboutCollapsedHeight(description);
+          description.classList.add("is-collapsed");
+        });
+      } else {
+        description.classList.remove("is-collapsed");
+        description.style.maxHeight = `${description.scrollHeight}px`;
+        description.closest(".about-content").scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+      }
+
+      button.textContent = isExpanded ? "Read More" : "Read Less";
+      button.setAttribute("aria-expanded", isExpanded ? "false" : "true");
+    });
+
+    description.insertAdjacentElement("afterend", button);
+  });
+
+  window.addEventListener("resize", () => {
+    aboutDescriptions.forEach((description) => {
+      const isCollapsed = description.classList.contains("is-collapsed");
+
+      if (isCollapsed) {
+        setAboutCollapsedHeight(description);
+      } else {
+        description.style.maxHeight = `${description.scrollHeight}px`;
+      }
     });
   });
 }
