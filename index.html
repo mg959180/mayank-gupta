@@ -46,8 +46,27 @@
           <a class="active" href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#resume">Resume</a>
-          <a href="#services">Services</a>
+          <div class="nav-dropdown">
+            <a href="#services">Services</a>
+            <div class="submenu">
+              <div class="submenu-group">
+                <span>Development</span>
+                <a href="#services">Static Website Development</a>
+                <a href="#services">Custom Website Development</a>
+                <a href="#services">E-commerce Development</a>
+                <a href="#services">Database Development</a>
+                <a href="#services">API Development</a>
+              </div>
+              <div class="submenu-group">
+                <span>Support</span>
+                <a href="#services">Database Support</a>
+                <a href="#services">Website Support</a>
+                <a href="#services">Technical Support</a>
+              </div>
+            </div>
+          </div>
           <a href="#portfolio">Portfolio</a>
+          <a href="#blogs">Blogs</a>
           <a href="#contact">Contact</a>
         </nav>
         <a class="hire-button" href="#contact">Get Started</a>
@@ -144,17 +163,19 @@
           <div class="card about-content">
             <span class="tag">About Me</span>
             <h3>Laravel, APIs, performance, and product-focused backend work.</h3>
-            <p>
-              Senior Laravel Developer with 5+ years of experience building secure,
-              scalable, and high-performance applications in product-based and SaaS
-              environments using strong Object-Oriented Programming fundamentals.
-            </p>
-            <p>
-              Experienced in backend architecture, RESTful API development, production
-              support, Agile delivery, and performance optimization across enterprise
-              platforms, including OpenAI integrations, queues, caching, and cloud-based
-              workflows.
-            </p>
+            <div class="about-description readmore" data-collapsed-lines="3">
+              <p>
+                Senior Laravel Developer with 5+ years of experience building secure,
+                scalable, and high-performance applications in product-based and SaaS
+                environments using strong Object-Oriented Programming fundamentals.
+              </p>
+              <p>
+                Experienced in backend architecture, RESTful API development, production
+                support, Agile delivery, and performance optimization across enterprise
+                platforms, including OpenAI integrations, queues, caching, and cloud-based
+                workflows.
+              </p>
+            </div>
 
             <div class="info-grid">
               <div class="info-item">
@@ -250,38 +271,103 @@
             <h3>Professional Journey</h3>
             <div class="timeline">
               <article class="card timeline-card">
-                <span class="resume-date">2023 - Present</span>
-                <h4>Lorem Ipsum Dolor</h4>
-                <div class="place">Lorem Studio</div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
+                <div class="job-meta">
+                  <div class="designation">
+                    <strong>Senior Software Engineer</strong>
+                  </div>
+                  <span class="resume-date">APR 2026 - Present</span>
+                </div>
+                <div class="company-row">
+                  <h4>Monocept Consulting Pvt Ltd</h4>
+                  <div class="client-info">
+                    <span>Client</span>
+                    <strong>Care Health Insurance Pvt Ltd</strong>
+                  </div>
+                </div>
+                <div class="place">Gurugram, Haryana</div>
+                <p class="readmore">
+                  Working as a Senior Software Engineer, I handle Laravel and PHP application development with focus on clean architecture, secure coding, API design, and database performance. I work with product and frontend teams to plan features, review code, improve existing modules, and support junior developers with practical guidance during development.
                 </p>
                 <div class="timeline-tags">
-                  <span>Lorem</span>
-                  <span>Ipsum</span>
-                  <span>Dolor</span>
+                  <span>PHP</span>
+                  <span>Laravel</span>
+                  <span>MySQL</span>
+                  <span>PostgreSQL</span>
+                  <span>JavaScript</span>
                 </div>
               </article>
 
               <article class="card timeline-card">
-                <span class="resume-date">2020 - 2023</span>
-                <h4>Sit Amet Elit</h4>
-                <div class="place">Ipsum Lab</div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
+                <div class="job-meta">
+                  <div class="designation">
+                    <strong>Software Engineer</strong>
+                  </div>
+                  <span class="resume-date">MAY 2025 - FEB 2026</span>
+                </div>
+                <div class="company-row">
+                  <h4>Evenion Technologies Pvt Ltd</h4>
+                  <div class="client-info">
+                    <span>Client</span>
+                    <strong>The Smart Cube - WNS</strong>
+                  </div>
+                </div>
+                <div class="place">Noida, Uttar Pradesh</div>
+                <p class="readmore">
+                  Worked as a Software Engineer on Laravel and PHP based web applications. My responsibilities included developing new modules, improving existing features, creating REST APIs, integrating internal and third-party APIs, optimizing database queries, and using Laravel jobs for background tasks such as emails, reports, and data synchronization.
                 </p>
+                <div class="timeline-tags">
+                  <span>PHP</span>
+                  <span>Laravel</span>
+                  <span>MySQL</span>
+                  <span>JavaScript</span>
+                  <span>REST APIs</span>
+                  <span>Performance Tuning</span>
+                  <span>Queue Jobs</span>
+                </div>
               </article>
 
               <article class="card timeline-card">
-                <span class="resume-date">2018 - 2020</span>
-                <h4>Consectetur Adipiscing</h4>
-                <div class="place">Dolor Works</div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
+                <div class="job-meta">
+                  <div class="designation">
+                    <strong>PHP Developer</strong>
+                  </div>
+                  <span class="resume-date">SEP 2021 - APR 2024</span>
+                </div>
+                <div class="company-row">
+                  <h4>Z Square Mall Pvt Ltd</h4>
+                  <div class="client-info">
+                    <span>Client</span>
+                    <strong>MatikSports Pvt Ltd</strong>
+                  </div>
+                </div>
+                <div class="place">Kanpur, Uttar Pradesh</div>
+                <p class="readmore">
+                  Worked as a PHP Developer, building and maintaining web application features using PHP, MySQL, JavaScript, HTML, and CSS. I handled backend logic, database operations, bug fixes, form validations, admin panel changes, and regular updates required for business workflows.
                 </p>
+                <div class="timeline-tags">
+                  <span>PHP</span>
+                  <span>MySQL</span>
+                  <span>JavaScript</span>
+                </div>
+              </article>
+
+              <article class="card timeline-card">
+                <div class="job-meta">
+                  <div class="designation">
+                    <strong>Web Developer</strong>
+                  </div>
+                  <span class="resume-date">DEC 2020 - MAY 2021</span>
+                </div>
+                <h4>Skyline Web Solutions</h4>
+                <div class="place">Kanpur, Uttar Pradesh</div>
+                <p class="readmore">
+                  Worked as a Web Developer, creating and updating dynamic websites using PHP, MySQL, JavaScript, HTML, and CSS. I worked on page layouts, basic backend functionality, database-driven content, contact forms, bug fixes, and website maintenance tasks.
+                </p>
+                <div class="timeline-tags">
+                  <span>PHP</span>
+                  <span>MySQL</span>
+                  <span>JavaScript</span>
+                </div>
               </article>
             </div>
           </div>
@@ -290,33 +376,26 @@
             <h3>Qualification</h3>
             <div class="timeline">
               <article class="card timeline-card">
-                <span class="resume-date">2017 - 2018</span>
-                <h4>Amet Consectetur</h4>
-                <div class="place">Lorem Institute</div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <span class="resume-date">2020</span>
+                <h4>Master of Computer Applications</h4>
+                <div class="place">Dr APJ Abdul kalam university</div>
               </article>
 
               <article class="card timeline-card">
-                <span class="resume-date">2013 - 2017</span>
-                <h4>Adipiscing Elit</h4>
-                <div class="place">Ipsum University</div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <span class="resume-date">2018</span>
+                <h4>Bachelor of Computer Applications</h4>
+                <div class="place">Indira Gandhi National Open University</div>
               </article>
 
               <article class="card timeline-card">
-                <span class="resume-date">2012 - 2013</span>
-                <h4>Tempor Incididunt</h4>
-                <div class="place">Dolor Online</div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <span class="resume-date">2013</span>
+                <h4>Intermediate</h4>
+                <div class="place">B.N.S.D Inter College</div>
+              </article>
+              <article class="card timeline-card">
+                <span class="resume-date">2011</span>
+                <h4>High School</h4>
+                <div class="place">B.N.S.D Inter College</div>
               </article>
             </div>
           </div>
@@ -337,73 +416,73 @@
 
         <div class="service-grid">
           <article class="service-card">
-            <div class="service-icon">BD</div>
-            <h3>Lorem Ipsum</h3>
+            <div class="service-icon">SWD</div>
+            <h3>Static Website Development</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Fast, responsive static websites for portfolios, business pages, and landing pages.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card featured">
-            <div class="service-icon">UI</div>
-            <h3>Dolor Sit</h3>
+            <div class="service-icon">CWD</div>
+            <h3>Custom Website Development</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Custom web applications built around your workflow, features, and business needs.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">DEV</div>
-            <h3>Amet Elit</h3>
+            <div class="service-icon">ECD</div>
+            <h3>E-commerce Development</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Online store development with product, cart, checkout, order, and admin features.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">APP</div>
-            <h3>Consectetur</h3>
+            <div class="service-icon">DBD</div>
+            <h3>Database Development</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Database design, tables, queries, reports, and structured data management.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">DM</div>
-            <h3>Adipiscing</h3>
+            <div class="service-icon">DBS</div>
+            <h3>Database Support</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Query fixes, backup checks, data cleanup, performance review, and regular support.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">SEO</div>
-            <h3>Tempor Labore</h3>
+            <div class="service-icon">WBS</div>
+            <h3>Website Support</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Website bug fixes, content updates, hosting support, and regular maintenance.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">AN</div>
-            <h3>Incididunt</h3>
+            <div class="service-icon">API</div>
+            <h3>API Development</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Secure REST API development, third-party integrations, and internal data flow.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">SC</div>
-            <h3>Magna Aliqua</h3>
+            <div class="service-icon">TS</div>
+            <h3>Technical Support</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              Practical technical help for web issues, deployment, errors, and troubleshooting.
             </p>
             <a class="service-link" href="#contact">Explore</a>
           </article>
@@ -411,9 +490,9 @@
 
         <div class="service-banner">
           <div>
-            <h3>Lorem ipsum dolor sit amet</h3>
+            <h3>Need reliable web development support?</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+              Share your requirement and I will help you choose the right development or support service.
             </p>
           </div>
           <a href="#contact">Start New Project</a>
@@ -614,6 +693,44 @@
       </div>
     </section>
 
+    <section id="blogs">
+      <div class="container">
+        <div class="section-title">
+          <span class="section-kicker">Blogs</span>
+          <h2>Blogs</h2>
+        </div>
+
+        <div class="blog-grid">
+          <article class="card blog-card">
+            <span>Laravel</span>
+            <h3>Laravel Development Notes</h3>
+            <p>
+              Practical notes on Laravel structure, APIs, queues, and clean backend development.
+            </p>
+            <a href="#contact">Read More</a>
+          </article>
+
+          <article class="card blog-card">
+            <span>Database</span>
+            <h3>Database Performance Tips</h3>
+            <p>
+              Simple ways to improve queries, indexing, reporting, and database-driven features.
+            </p>
+            <a href="#contact">Read More</a>
+          </article>
+
+          <article class="card blog-card">
+            <span>Support</span>
+            <h3>Website Support Checklist</h3>
+            <p>
+              A useful checklist for bug fixes, updates, backups, hosting, and maintenance work.
+            </p>
+            <a href="#contact">Read More</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="container">
         <div class="section-title">
@@ -687,16 +804,18 @@
             <li><a href="#about">About</a></li>
             <li><a href="#resume">Resume</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#blogs">Blogs</a></li>
           </ul>
         </div>
 
         <div>
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#services">Static Website Design</a></li>
-            <li><a href="#services">Website Development</a></li>
+            <li><a href="#services">Static Website Development</a></li>
+            <li><a href="#services">Custom Website Development</a></li>
+            <li><a href="#services">E-commerce Development</a></li>
             <li><a href="#services">Database Development</a></li>
-            <li><a href="#services">Technical Suppourt</a></li>
+            <li><a href="#services">Technical Support</a></li>
           </ul>
         </div>
 
