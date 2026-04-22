@@ -1,17 +1,24 @@
 const topbar = document.querySelector(".topbar");
 const toggle = document.querySelector(".nav-toggle");
 const menuLinks = document.querySelectorAll(".nav a, .nav-panel .hire-button");
+const navDropdowns = document.querySelectorAll(".nav-dropdown");
+const navDropdownToggles = document.querySelectorAll(".nav-dropdown-toggle");
+const submenuGroups = document.querySelectorAll(".submenu-group");
+const submenuGroupToggles = document.querySelectorAll(".submenu-group-toggle");
 const typedRole = document.querySelector(".typed-role");
 const hero = document.querySelector(".hero");
 const profilePhoto = document.querySelector(".profile-pic img[data-local-src]");
-const gallery = document.querySelector(".gallery");
-const portfolioTabs = document.querySelectorAll(".portfolio-filter a");
-const galleryCards = document.querySelectorAll(".gallery-card");
 const jobSummaries = document.querySelectorAll(".timeline-card .readmore");
 const aboutDescriptions = document.querySelectorAll(".about-description.readmore");
 const revealSections = document.querySelectorAll("main section");
 const skillBars = document.querySelectorAll(".skills .bar div");
-let portfolioSwitchTimer = null;
+const quotationForm = document.querySelector("#quotation-form");
+
+const emailConfig = {
+  publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
+  serviceId: "YOUR_EMAILJS_SERVICE_ID",
+  templateId: "YOUR_EMAILJS_TEMPLATE_ID"
+};
 
 if (revealSections.length) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -88,10 +95,10 @@ if (hero) {
   const heroBanner = new Image();
 
   heroBanner.onload = () => {
-    document.documentElement.style.setProperty("--hero-banner-image", 'url("assets/hero-banner.jpg")');
+    document.documentElement.style.setProperty("--hero-banner-image", 'url("../hero-banner.png")');
   };
 
-  heroBanner.src = "assets/hero-banner.jpg";
+  heroBanner.src = "../hero-banner.png";
 }
 
 if (profilePhoto) {
@@ -148,16 +155,66 @@ if (typedRole) {
 }
 
 if (topbar && toggle) {
+  const resetSubmenus = () => {
+    navDropdowns.forEach((dropdown) => {
+      dropdown.classList.remove("is-open");
+    });
+
+    navDropdownToggles.forEach((button) => {
+      button.setAttribute("aria-expanded", "false");
+    });
+
+    submenuGroups.forEach((group) => {
+      group.classList.remove("is-open");
+    });
+
+    submenuGroupToggles.forEach((button) => {
+      button.setAttribute("aria-expanded", "false");
+    });
+  };
+
   const setMenuState = (isOpen) => {
     topbar.classList.toggle("menu-open", isOpen);
     document.documentElement.classList.toggle("menu-open", isOpen);
     document.body.classList.toggle("menu-open", isOpen);
     toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+    if (!isOpen) {
+      resetSubmenus();
+    }
   };
 
   toggle.addEventListener("click", () => {
     const isOpen = !topbar.classList.contains("menu-open");
     setMenuState(isOpen);
+  });
+
+  navDropdownToggles.forEach((button) => {
+    button.addEventListener("click", () => {
+      const dropdown = button.closest(".nav-dropdown");
+      const isOpen = dropdown.classList.toggle("is-open");
+
+      button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+      if (!isOpen) {
+        dropdown.querySelectorAll(".submenu-group").forEach((group) => {
+          group.classList.remove("is-open");
+        });
+
+        dropdown.querySelectorAll(".submenu-group-toggle").forEach((groupButton) => {
+          groupButton.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+  });
+
+  submenuGroupToggles.forEach((button) => {
+    button.addEventListener("click", () => {
+      const group = button.closest(".submenu-group");
+      const isOpen = group.classList.toggle("is-open");
+
+      button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
   });
 
   menuLinks.forEach((link) => {
@@ -167,63 +224,248 @@ if (topbar && toggle) {
   });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 720) {
+    if (window.innerWidth > 820) {
       setMenuState(false);
     }
   });
 }
 
-if (portfolioTabs.length && galleryCards.length) {
-  const animateVisibleCards = () => {
-    const visibleCards = Array.from(galleryCards).filter((card) => !card.classList.contains("is-hidden"));
+if (quotationForm) {
+  const submitButton = quotationForm.querySelector(".contact-button");
+  const formStatus = quotationForm.querySelector(".form-status");
+  const formFields = {
+    name: quotationForm.elements.name,
+    email: quotationForm.elements.email,
+    phone: quotationForm.elements.phone,
+    service: quotationForm.elements.service,
+    projectDetails: quotationForm.elements.project_details
+  };
+  const stripRiskyPatterns = (value) => value
+    .replace(/<[^>]*>/g, "")
+    .replace(/javascript:/gi, "")
+    .replace(/on\w+\s*=/gi, "")
+    .replace(/(\b(select|insert|update|delete|drop|alter|truncate|union|exec)\b|--|\/\*|\*\/)/gi, "")
+    .replace(/[<>"'`=\\]/g, "");
 
-    visibleCards.forEach((card, index) => {
-      card.classList.remove("is-entering");
-      card.style.animationDelay = "0ms";
-      void card.offsetWidth;
-      card.style.animationDelay = `${index * 55}ms`;
-      card.classList.add("is-entering");
+  const sanitizeText = (value) => stripRiskyPatterns(value)
+    .replace(/\s+/g, " ")
+    .trim();
 
-      window.setTimeout(() => {
-        card.classList.remove("is-entering");
-        card.style.animationDelay = "0ms";
-      }, 420 + index * 55);
-    });
+  const sanitizeEmail = (value) => value
+    .toLowerCase()
+    .replace(/[^a-z0-9@._+-]/g, "")
+    .trim();
+
+  const sanitizePhone = (value) => value
+    .replace(/[^\d+\-()\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const sanitizeService = (value) => {
+    const allowedServices = [
+      "static-website",
+      "custom-website",
+      "ecommerce",
+      "database",
+      "api",
+      "support"
+    ];
+
+    return allowedServices.includes(value) ? value : "";
   };
 
-  portfolioTabs.forEach((tab) => {
-    tab.addEventListener("click", (event) => {
-      event.preventDefault();
+  const sanitizeTextarea = (value) => stripRiskyPatterns(value)
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 
-      const selectedFilter = tab.dataset.filter || "all";
+  const sanitizeFormValues = () => {
+    formFields.name.value = sanitizeText(formFields.name.value);
+    formFields.email.value = sanitizeEmail(formFields.email.value);
+    formFields.phone.value = sanitizePhone(formFields.phone.value);
+    formFields.service.value = sanitizeService(formFields.service.value);
+    formFields.projectDetails.value = sanitizeTextarea(formFields.projectDetails.value);
+  };
 
-      portfolioTabs.forEach((item) => {
-        item.classList.toggle("active", item === tab);
-      });
-
-      if (portfolioSwitchTimer) {
-        window.clearTimeout(portfolioSwitchTimer);
+  const validators = {
+    name: (value) => {
+      if (!value.trim()) {
+        return "Please enter your full name.";
       }
 
-      if (gallery) {
-        gallery.classList.add("is-switching");
+      if (value.trim().length < 3) {
+        return "Name must be at least 3 characters.";
       }
 
-      portfolioSwitchTimer = window.setTimeout(() => {
-        galleryCards.forEach((card) => {
-          const categories = (card.dataset.category || "").split(" ").filter(Boolean);
-          const shouldShow = selectedFilter === "all" || categories.includes(selectedFilter);
-          card.classList.toggle("is-hidden", !shouldShow);
-        });
+      return "";
+    },
+    email: (value) => {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        requestAnimationFrame(() => {
-          if (gallery) {
-            gallery.classList.remove("is-switching");
-          }
-          animateVisibleCards();
-        });
-      }, 140);
+      if (!value.trim()) {
+        return "Please enter your email address.";
+      }
+
+      if (!emailPattern.test(value.trim())) {
+        return "Please enter a valid email address.";
+      }
+
+      return "";
+    },
+    phone: (value) => {
+      const phoneValue = value.trim();
+      const digits = phoneValue.replace(/\D/g, "");
+
+      if (!phoneValue) {
+        return "Please enter your phone or WhatsApp number.";
+      }
+
+      if (digits.length < 10 || digits.length > 15) {
+        return "Phone number must contain 10 to 15 digits.";
+      }
+
+      return "";
+    },
+    service: (value) => {
+      if (!value) {
+        return "Please select a service.";
+      }
+
+      return "";
+    },
+    projectDetails: (value) => {
+      if (!value.trim()) {
+        return "Please share your project requirements.";
+      }
+
+      if (value.trim().length < 20) {
+        return "Project requirements must be at least 20 characters.";
+      }
+
+      return "";
+    }
+  };
+
+  const setFormStatus = (message, type = "") => {
+    if (!formStatus) {
+      return;
+    }
+
+    formStatus.textContent = message;
+    formStatus.classList.toggle("is-visible", Boolean(message));
+    formStatus.classList.toggle("is-success", type === "success");
+    formStatus.classList.toggle("is-error", type === "error");
+  };
+
+  const setFieldError = (field, message) => {
+    const fieldWrapper = field.closest(".form-field");
+    const errorMessage = fieldWrapper ? fieldWrapper.querySelector(".field-error") : null;
+
+    field.classList.toggle("is-invalid", Boolean(message));
+    field.setAttribute("aria-invalid", message ? "true" : "false");
+
+    if (errorMessage) {
+      errorMessage.textContent = message;      
+      errorMessage.classList.toggle("is-visible", Boolean(message));
+    }
+  };
+
+  const validateField = (fieldKey) => {
+    const field = formFields[fieldKey];
+    const validator = validators[fieldKey];
+
+    if (!field || !validator) {
+      return true;
+    }
+
+    const errorMessage = validator(field.value);
+
+    setFieldError(field, errorMessage);
+    return !errorMessage;
+  };
+
+  const validateQuotationForm = () => {
+    const fieldKeys = Object.keys(formFields);
+    const invalidFieldKey = fieldKeys.reduce((firstInvalidKey, fieldKey) => {
+      const isValid = validateField(fieldKey);
+
+      return firstInvalidKey || (isValid ? "" : fieldKey);
+    }, "");
+
+    if (invalidFieldKey) {
+      formFields[invalidFieldKey].focus();
+      setFormStatus("Please fix the highlighted fields before sending.", "error");
+      return false;
+    }
+
+    setFormStatus("");
+    return true;
+  };
+
+  Object.keys(formFields).forEach((fieldKey) => {
+    const field = formFields[fieldKey];
+
+    if (!field) {
+      return;
+    }
+
+    field.addEventListener("input", () => {
+      if (fieldKey === "email") {
+        field.value = sanitizeEmail(field.value);
+      } else if (fieldKey === "phone") {
+        field.value = sanitizePhone(field.value);
+      } else if (fieldKey === "service") {
+        field.value = sanitizeService(field.value);
+      } else {
+        field.value = field.value.replace(/[<>"'`=\\]/g, "");
+      }
+
+      validateField(fieldKey);
     });
+
+    field.addEventListener("blur", () => {
+      validateField(fieldKey);
+    });
+  });
+
+  quotationForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    sanitizeFormValues();
+
+    if (!validateQuotationForm()) {
+      return;
+    }
+
+    if (!window.emailjs) {
+      setFormStatus("Email service is not loaded. Please try again later.", "error");
+      return;
+    }
+
+    if (emailConfig.publicKey.includes("YOUR_") || emailConfig.serviceId.includes("YOUR_") || emailConfig.templateId.includes("YOUR_")) {
+      setFormStatus("Email setup is pending. Please add your EmailJS keys in script.js.", "error");
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+    setFormStatus("Sending your hiring request...");
+
+    emailjs.init({
+      publicKey: emailConfig.publicKey
+    });
+
+    emailjs.sendForm(emailConfig.serviceId, emailConfig.templateId, quotationForm)
+      .then(() => {
+        quotationForm.reset();
+        setFormStatus("Thank you. Your hiring request has been sent.", "success");
+      })
+      .catch(() => {
+        setFormStatus("Sorry, your request could not be sent. Please email me directly.", "error");
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = "Hire Me";
+      });
   });
 }
 

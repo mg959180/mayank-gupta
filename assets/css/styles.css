@@ -13,7 +13,7 @@
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
       --radius: 18px;
       --container: 1140px;
-      --hero-banner-image: url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1400&q=80");
+      --hero-banner-image: url("../hero-banner.png");
     }
 
     * {
@@ -138,14 +138,48 @@
       align-items: center;
     }
 
+    .nav-dropdown-toggle,
+    .submenu-group-toggle {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .nav-dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      color: #d6d6d6;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .nav-dropdown-toggle:hover,
+    .nav-dropdown-toggle:focus-visible,
+    .nav-dropdown-toggle.active {
+      color: var(--accent);
+    }
+
+    .nav-dropdown-toggle i,
+    .submenu-group-toggle i {
+      transition: transform 0.2s ease;
+    }
+
+    .nav-dropdown.is-open .nav-dropdown-toggle i,
+    .submenu-group.is-open .submenu-group-toggle i {
+      transform: rotate(180deg);
+    }
+
     .submenu {
       position: absolute;
       top: calc(100% + 18px);
       left: 50%;
       display: grid;
-      grid-template-columns: repeat(2, minmax(190px, 1fr));
-      gap: 18px;
-      width: min(520px, calc(100vw - 32px));
+      grid-template-columns: 1fr;
+      gap: 10px;
+      width: min(320px, calc(100vw - 32px));
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -158,8 +192,7 @@
       transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
     }
 
-    .nav-dropdown:hover .submenu,
-    .nav-dropdown:focus-within .submenu {
+    .nav-dropdown.is-open .submenu {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
@@ -171,12 +204,32 @@
       gap: 8px;
     }
 
-    .submenu-group span {
+    .submenu-group-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       color: var(--accent);
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+    }
+
+    .submenu-group-links {
+      display: grid;
+      gap: 8px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: max-height 0.24s ease, opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .submenu-group.is-open .submenu-group-links {
+      max-height: 320px;
+      opacity: 1;
+      visibility: visible;
     }
 
     .submenu-group a {
@@ -247,9 +300,13 @@
       min-height: 720px;
       position: relative;
       overflow: hidden;
-      background:
+      background-color: #0b0b0b;
+      background-image:
         linear-gradient(90deg, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.52) 34%, rgba(0, 0, 0, 0.52) 58%, rgba(0, 0, 0, 0.52) 100%),
-        var(--hero-banner-image) 76% top / cover no-repeat;
+        var(--hero-banner-image);
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
+      background-size: cover, contain;
       display: flex;
       align-items: center;
     }
@@ -961,48 +1018,10 @@
       font-weight: 700;
     }
 
-    .portfolio-filter {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-
-    .portfolio-filter a {
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.02);
-      font-size: 0.84rem;
-      transition: color 0.24s ease, border-color 0.24s ease, background 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease;
-    }
-
-    .portfolio-filter a:hover {
-      transform: translateY(-2px);
-      color: #ffffff;
-      border-color: rgba(255, 91, 103, 0.28);
-      background: rgba(255, 91, 103, 0.08);
-    }
-
-    .portfolio-filter a.active {
-      color: white;
-      background: rgba(255, 91, 103, 0.14);
-      border-color: rgba(255, 91, 103, 0.28);
-      box-shadow: 0 10px 24px rgba(255, 91, 103, 0.18);
-    }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
-      transition: opacity 0.24s ease, transform 0.24s ease;
-    }
-
-    .gallery.is-switching {
-      opacity: 0.24;
-      transform: translateY(10px);
     }
 
     .gallery-card {
@@ -1166,14 +1185,6 @@
       color: #ffffff;
     }
 
-    .gallery-card.is-hidden {
-      display: none;
-    }
-
-    .gallery-card.is-entering {
-      animation: portfolioCardIn 0.38s ease both;
-    }
-
     .gallery-action:hover,
     .gallery-action:focus-visible {
       background: var(--accent-color);
@@ -1181,18 +1192,6 @@
       transform: translateY(-2px) scale(1.03);
       box-shadow: 0 18px 30px rgba(255, 91, 103, 0.24);
       outline: none;
-    }
-
-    @keyframes portfolioCardIn {
-      from {
-        opacity: 0;
-        transform: translateY(18px) scale(0.985);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
     }
 
     .gallery-bottom {
@@ -1293,8 +1292,18 @@
       gap: 14px;
     }
 
+    .form-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-field.full-width {
+      grid-column: 1 / -1;
+    }
+
     .contact-form textarea,
-    .contact-form input {
+    .contact-form input,
+    .contact-form select {
       width: 100%;
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -1304,15 +1313,46 @@
       outline: none;
     }
 
+    .contact-form input.is-invalid,
+    .contact-form select.is-invalid,
+    .contact-form textarea.is-invalid {
+      border-color: rgba(255, 91, 103, 0.78);
+      box-shadow: 0 0 0 3px rgba(255, 91, 103, 0.1);
+    }
+
     .contact-form input::placeholder,
     .contact-form textarea::placeholder {
       color: #767676;
     }
 
+    .contact-form select {
+      color: #767676;
+      cursor: pointer;
+    }
+
+    .contact-form select:valid {
+      color: white;
+    }
+
+    .contact-form option {
+      background: #1b1b1b;
+      color: white;
+    }
+
     .contact-form textarea {
       min-height: 150px;
       resize: vertical;
-      grid-column: 1 / -1;
+    }
+
+    .field-error {
+      display: none;
+      min-height: 17px;
+      color: #ff8d96;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+    .field-error.is-visible {
+      display: block;
     }
 
     .contact-button {
@@ -1320,6 +1360,32 @@
       padding: 13px 24px;
       cursor: pointer;
       justify-self: start;
+    }
+
+    .contact-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.72;
+    }
+
+    .form-status {
+      display: none;
+      grid-column: 1 / -1;
+      min-height: 22px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .form-status.is-visible {
+      display: block;
+    }
+
+    .form-status.is-success {
+      color: #72d68a;
+    }
+
+    .form-status.is-error {
+      color: #ff8d96;
     }
 
     .footer {
@@ -1533,6 +1599,23 @@
         letter-spacing: 0.03em;
       }
 
+      .nav-dropdown-toggle {
+        width: 100%;
+        min-height: 54px;
+        justify-content: center;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-size: 1.08rem;
+        letter-spacing: 0.03em;
+      }
+
+      .nav-dropdown-toggle:hover,
+      .nav-dropdown-toggle:focus-visible,
+      .nav-dropdown.is-open .nav-dropdown-toggle {
+        background: rgba(255, 91, 103, 0.08);
+        color: var(--accent);
+      }
+
       .nav a:hover,
       .nav a.active {
         background: rgba(255, 91, 103, 0.08);
@@ -1545,26 +1628,76 @@
         margin-top: 8px;
         padding: 12px;
         background: rgba(255, 255, 255, 0.03);
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
         transform: none;
         box-shadow: none;
+        overflow: hidden;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        transition: max-height 0.28s ease, opacity 0.22s ease, visibility 0.22s ease, padding 0.22s ease;
       }
 
       .nav-dropdown:hover .submenu,
       .nav-dropdown:focus-within .submenu {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
         transform: none;
       }
 
+      .nav-dropdown.is-open .submenu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        max-height: 520px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
       .submenu-group {
-        justify-items: center;
+        justify-items: stretch;
+        gap: 0;
+        width: 100%;
+      }
+
+      .submenu-group + .submenu-group {
+        margin-top: 8px;
+      }
+
+      .submenu-group-toggle {
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        text-align: left;
       }
 
       .submenu-group a {
         padding: 9px 8px;
-        text-align: center;
+        text-align: left;
         font-size: 0.9rem;
+      }
+
+      .submenu-group-links {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        padding: 0 12px;
+        transition: max-height 0.24s ease, opacity 0.2s ease, visibility 0.2s ease, padding 0.2s ease;
+      }
+
+      .submenu-group.is-open .submenu-group-links {
+        max-height: 320px;
+        opacity: 1;
+        visibility: visible;
+        padding-top: 8px;
+        padding-bottom: 6px;
       }
 
       .hire-button {
@@ -1579,7 +1712,7 @@
 
       .hero {
         min-height: 620px;
-        background-position: 68% center;
+        background-position: center, center;
       }
 
       .hero h2 {
@@ -1697,22 +1830,6 @@
 
       .job-meta .resume-date {
         white-space: normal;
-      }
-
-      .portfolio-filter {
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 6px;
-        scrollbar-width: none;
-      }
-
-      .portfolio-filter::-webkit-scrollbar {
-        display: none;
-      }
-
-      .portfolio-filter a {
-        flex: 0 0 auto;
       }
 
       .gallery-overlay {

@@ -30,7 +30,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Mayank Gupta || Software Engineer</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
   <header class="topbar">
@@ -47,21 +47,34 @@
           <a href="#about">About</a>
           <a href="#resume">Resume</a>
           <div class="nav-dropdown">
-            <a href="#services">Services</a>
-            <div class="submenu">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="services-submenu">
+              Services
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </button>
+            <div class="submenu" id="services-submenu">
               <div class="submenu-group">
-                <span>Development</span>
-                <a href="#services">Static Website Development</a>
-                <a href="#services">Custom Website Development</a>
-                <a href="#services">E-commerce Development</a>
-                <a href="#services">Database Development</a>
-                <a href="#services">API Development</a>
+                <button class="submenu-group-toggle" type="button" aria-expanded="false" aria-controls="development-submenu">
+                  Development
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+                <div class="submenu-group-links" id="development-submenu">
+                  <a href="#services">Static Website Development</a>
+                  <a href="#services">Custom Website Development</a>
+                  <a href="#services">E-commerce Development</a>
+                  <a href="#services">Database Development</a>
+                  <a href="#services">API Development</a>
+                </div>
               </div>
               <div class="submenu-group">
-                <span>Support</span>
-                <a href="#services">Database Support</a>
-                <a href="#services">Website Support</a>
-                <a href="#services">Technical Support</a>
+                <button class="submenu-group-toggle" type="button" aria-expanded="false" aria-controls="support-submenu">
+                  Support
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+                <div class="submenu-group-links" id="support-submenu">
+                  <a href="#services">Database Support</a>
+                  <a href="#services">Website Support</a>
+                  <a href="#services">Technical Support</a>
+                </div>
               </div>
             </div>
           </div>
@@ -511,14 +524,6 @@
           </p> -->
         </div>
 
-        <div class="portfolio-filter">
-          <a class="active" href="#portfolio" data-filter="all">All</a>
-          <a href="#portfolio" data-filter="creative">Lorem</a>
-          <a href="#portfolio" data-filter="digital">Ipsum</a>
-          <a href="#portfolio" data-filter="artistry">Dolor</a>
-          <a href="#portfolio" data-filter="development">Amet</a>
-        </div>
-
         <div class="gallery">
           <article class="gallery-card" data-category="creative digital">
             <div class="gallery-visual">
@@ -759,12 +764,37 @@
           </div>
 
           <div class="card contact-form">
-            <form>
-              <input type="text" placeholder="Your Name">
-              <input type="email" placeholder="Your Email">
-              <input type="text" placeholder="Subject" style="grid-column: 1 / -1;">
-              <textarea placeholder="Message"></textarea>
-              <button class="contact-button" type="submit">Send Message</button>
+            <form id="quotation-form" novalidate>
+              <div class="form-field">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <span class="field-error"></span>
+              </div>
+              <div class="form-field">
+                <input type="email" name="email" placeholder="Email Address" required>
+                <span class="field-error"></span>
+              </div>
+              <div class="form-field">
+                <input type="tel" name="phone" placeholder="Phone / WhatsApp" required>
+                <span class="field-error"></span>
+              </div>
+              <div class="form-field">
+                <select name="service" required>
+                <option value="">Select Service</option>
+                <option value="static-website">Static Website Development</option>
+                <option value="custom-website">Custom Website Development</option>
+                <option value="ecommerce">E-commerce Development</option>
+                <option value="database">Database Development</option>
+                <option value="api">API Development</option>
+                <option value="support">Website / Technical Support</option>
+                </select>
+                <span class="field-error"></span>
+              </div>
+              <div class="form-field full-width">
+                <textarea name="project_details" placeholder="Project Requirements" required></textarea>
+                <span class="field-error"></span>
+              </div>
+              <button class="contact-button" type="submit">Hire Me</button>
+              <p class="form-status" aria-live="polite"></p>
             </form>
           </div>
         </div>
@@ -778,8 +808,8 @@
         <div>
           <h3>Mayank Gupta</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
+            PHP / Laravel developer building secure web applications, APIs, database-driven
+            systems, and reliable technical support for growing businesses.
           </p>
           <div class="footer-social">
             <a href="https://www.facebook.com/mayankomar.mayank/" rel="noopener" aria-label="Facebook" target="_blank">
@@ -834,6 +864,7 @@
       </div>
     </div>
   </footer>
-  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
