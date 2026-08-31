@@ -93,6 +93,7 @@
       top: 0;
       z-index: 50;
       background: rgba(6, 6, 6, 0.78);
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
@@ -287,7 +288,6 @@
       background: var(--accent-color);
       color: var(--contrast-color);
       font-weight: 700;
-      box-shadow: 0 10px 22px rgba(255, 91, 103, 0.28);
     }
 
     .hire-button {
@@ -297,7 +297,7 @@
     }
 
     .hero {
-      min-height: 720px;
+      min-height: 40vw;
       position: relative;
       overflow: hidden;
       background-color: #0b0b0b;
@@ -473,7 +473,13 @@
       gap: 28px;
       align-items: start;
     }
-
+    .about-skill{
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
     .card {
       background: linear-gradient(180deg, rgba(29, 29, 29, 0.98), rgba(24, 24, 24, 0.96));
       border: 1px solid var(--line);
@@ -489,8 +495,8 @@
     }
 
     .profile-pic {
-      width: 92px;
-      height: 92px;
+      width: 112px;
+      height: 112px;
       margin: 0 auto 18px;
       padding: 5px;
       border-radius: 50%;
@@ -581,8 +587,8 @@
     }
 
     .mini-social a {
-      width: 28px;
-      height: 28px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       border: 1px solid var(--line);
       display: inline-flex;
@@ -592,7 +598,7 @@
       font-size: 0.8rem;
     }
 
-    .about-content {
+    .about-content, .skill-content {
       padding: 28px;
     }
 
@@ -633,7 +639,7 @@
 
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
       margin-top: 24px;
     }
@@ -655,10 +661,6 @@
       color: var(--muted);
       font-size: 0.88rem;
       line-height: 1.6;
-    }
-
-    .skills {
-      margin-top: 28px;
     }
 
     .skill-row {
@@ -692,9 +694,13 @@
       transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    .bar-width{
+      width: var(--width);
+    }
+
     .resume-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(1, minmax(0, 1fr));
       gap: 26px;
     }
 
@@ -781,8 +787,12 @@
     }
 
     .timeline-card h4 {
-      margin: 0;
+      margin: 6px 5px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
       font-size: 1.12rem;
+      padding: 6px 10px;
     }
 
     .timeline-card .place {
@@ -1489,6 +1499,7 @@
         min-height: 74px;
       }
 
+      .about-skill,
       .about-grid,
       .resume-grid,
       .contact-grid,
@@ -1550,6 +1561,7 @@
         background:
           linear-gradient(180deg, rgba(10, 10, 10, 0.96), rgba(18, 18, 18, 0.99)),
           radial-gradient(circle at top right, rgba(255, 91, 103, 0.12), transparent 28%);
+        -webkit-backdrop-filter: blur(14px);
         backdrop-filter: blur(14px);
         opacity: 0;
         visibility: hidden;
@@ -1711,8 +1723,7 @@
       }
 
       .hero {
-        min-height: 620px;
-        background-position: center, center;
+        height: 65vh;
       }
 
       .hero h2 {
@@ -1775,7 +1786,8 @@
       }
 
       .hero {
-        min-height: 560px;
+          height: 45vh;
+          min-height: 40vw;
       }
 
       .hero-content {
